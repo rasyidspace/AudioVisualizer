@@ -10,6 +10,7 @@ interface VisualizerProps {
   accentColor?: string;
   sensitivity?: number;
   smoothing?: number;
+  transparent?: boolean;
 }
 
 export default function Visualizer({ 
@@ -20,7 +21,8 @@ export default function Visualizer({
   primaryColor = '#8B5CF6',
   accentColor = '#6366F1',
   sensitivity = 1.4,
-  smoothing = 0.8
+  smoothing = 0.8,
+  transparent = false
 }: VisualizerProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
@@ -328,15 +330,15 @@ export default function Visualizer({
       transition={{ duration: 0.8, ease: "easeOut" }}
       className={`flex-1 flex flex-col items-center justify-center relative min-w-[300px] transition-all duration-700 ${zenMode ? 'h-screen w-screen fixed inset-0 z-40 bg-black/90' : 'h-full'}`}
     >
-      {!zenMode && (
+      {!zenMode && !transparent && (
         <div 
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-[100px] -z-10 pointer-events-none transition-colors duration-1000" 
           style={{ backgroundColor: `${primaryColor}33` }} 
         />
       )}
       
-      <div className={`w-full h-full relative flex items-center justify-center overflow-hidden transition-all duration-700 ${zenMode ? 'rounded-none' : 'max-h-[70vh] rounded-3xl glass-panel'}`}>
-        {!isPlaying && !audioInitialized && !mediaStream && (
+      <div className={`w-full h-full relative flex items-center justify-center overflow-hidden transition-all duration-700 ${zenMode ? 'rounded-none' : transparent ? 'rounded-none border-0 bg-transparent shadow-none' : 'max-h-[70vh] rounded-3xl glass-panel'}`}>
+        {!isPlaying && !audioInitialized && !mediaStream && !transparent && (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-8 z-10 pointer-events-none opacity-50">
             <h2 className="text-2xl font-bold mb-2">No Audio Captured</h2>
             <p className="text-sm">Click "Listen to Tab" to start visualizing</p>
