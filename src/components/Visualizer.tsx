@@ -89,7 +89,6 @@ export default function Visualizer({
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
     let time = 0;
     
     const dataArray = analyserRef.current ? new Uint8Array(analyserRef.current.frequencyBinCount) : new Uint8Array(128);
